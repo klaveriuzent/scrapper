@@ -5,7 +5,7 @@ const cheerio = require('cheerio');
 const app = express();
 const port = 3000;
 
-app.get('/', async (req, res) => {
+async function getData() {
   try {
     // mengambil halaman web
     const { data } = await axios.get('https://www.detik.com');
@@ -19,7 +19,28 @@ app.get('/', async (req, res) => {
       articles.push({ title, link });
     });
 
+    // menampilkan pesan pada console
+    console.log('Data berhasil diambil');
+
     // mengirimkan data yang diambil ke client dalam format JSON
+    return articles;
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// menjalankan kode getData() setiap 20 menit
+setInterval(async () => {
+  try {
+    const articles = await getData();
+  } catch (error) {
+    console.error(error);
+  }
+}, 1200000);
+
+app.get('/', async (req, res) => {
+  try {
+    const articles = await getData();
     res.json(articles);
   } catch (error) {
     console.error(error);
