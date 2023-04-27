@@ -19,8 +19,9 @@ async function getData() {
       articles.push({ title, link });
     });
 
-    // menampilkan pesan pada console
-    console.log('Data berhasil diambil');
+    // menampilkan pesan pada console dengan keterangan waktu
+    const now = new Date();
+    console.log(`[${now.toLocaleTimeString()} - ${now.toLocaleDateString()}] Data berhasil diambil`);
 
     // mengirimkan data yang diambil ke client dalam format JSON
     return articles;
